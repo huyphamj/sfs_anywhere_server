@@ -20,22 +20,15 @@ public class LoginHandler extends BaseServerEventHandler {
 
 	@Override
 	public void handleServerEvent(ISFSEvent event) throws SFSException {
-		try {
-			String phonenumber = (String) event.getParameter(SFSEventParam.LOGIN_NAME);
-			ISFSObject loginData = (ISFSObject) event.getParameter(SFSEventParam.LOGIN_IN_DATA);
-			trace("User phonenumber: " + phonenumber);
-			if (phonenumber.length() > 0 && (!phonenumber.startsWith("Guest"))) {
-				doLoginNormal(loginData, phonenumber);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-			
+		String phonenumber = (String) event.getParameter(SFSEventParam.LOGIN_NAME);
+		ISFSObject loginData = (ISFSObject) event.getParameter(SFSEventParam.LOGIN_IN_DATA);
+		if (phonenumber.length() > 0 && (!phonenumber.startsWith("Guest"))) {
+			doLoginNormal(loginData, phonenumber);
 		}
 	}
 
 	private void doLoginNormal(ISFSObject param, String phonenumber) throws SFSLoginException {
 		String password = param.getUtfString(EventParams.PASSWORD);
-		// String phonenumber = param.getUtfString(EventParams.PHONENUMBER);
 		String clientSign = param.getUtfString(EventParams.SIGN);
 		trace("do login normal with phonenumber: " + phonenumber + ", password: " + password + ", sign: " + clientSign);
 
@@ -48,7 +41,11 @@ public class LoginHandler extends BaseServerEventHandler {
 			data.addParameter("<<" + errorInfo.toJson() + ">>");
 			throw new SFSLoginException("Invalid signature", data);
 		} else {
+			// ko dùng db thì comment 45, comment anywherezoneExtension.java dòng 11 và uncomment dùng 46 47 48 
 			UserBean queryUser = DatabaseEngine.getInstance().userDAO.getUserByPhoneNumber(phonenumber);
+//			UserBean queryUser = new UserBean();
+//			queryUser.setPhonenumber("0987654321");
+//			queryUser.setPassword("e10adc3949ba59abbe56e057f20f883e");
 			if (!queryUser.getPassword().equals(password)) {
 				ISFSObject errorInfo = new SFSObject();
 				SFSErrorData data = new SFSErrorData(SFSErrorCode.LOGIN_BAD_PASSWORD);
@@ -57,6 +54,7 @@ public class LoginHandler extends BaseServerEventHandler {
 				data.addParameter("<<" + errorInfo.toJson() + ">>");
 				throw new SFSLoginException("Invalid account", data);
 			} else {
+
 			}
 		}
 	}

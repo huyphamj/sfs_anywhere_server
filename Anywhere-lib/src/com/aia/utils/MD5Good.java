@@ -38,7 +38,8 @@ public class MD5Good {
 
     public static void main(String[] args) {
         try {
-            String pass = MD5Good.hash("mobi|23659874|123568|pi|NU4ET96K|").toUpperCase();
+//            String pass = MD5Good.hash("mobi|23659874|123568|pi|NU4ET96K|").toUpperCase();
+        	String pass = MD5Good.hash("123456");
             System.out.println(pass);
         } catch (Exception e) {
             // TODO Auto-generated catch block

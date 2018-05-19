@@ -1,13 +1,11 @@
 package com.aia.zone;
 
-import com.aia.constant.Config;
 import com.aia.constant.EventParams;
 import com.aia.constant.LobbyCommand;
 import com.aia.constant.ResponseCode;
 import com.aia.db.bean.UserBean;
 import com.aia.db.dao.DatabaseEngine;
 import com.aia.db.dao.UserDAO;
-import com.aia.utils.MD5Good;
 import com.aia.utils.OTPManager;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.ISFSObject;
@@ -98,6 +96,8 @@ public class LobbyRequestHandler extends BaseClientRequestHandler {
 		// result = getResultFailedObject("Tài khoản không hợp lệ.");
 		// send(LobbyCommand.LOGIN, result, user);
 		// } else {
+		String username = user.getName();
+		trace("========== DEBUG ========== on get user data: username = " + username);
 		String phonenumber = param.getUtfString(EventParams.PHONENUMBER);
 		UserBean queryUser = DatabaseEngine.getInstance().userDAO.getUserByPhoneNumber(phonenumber);
 		ISFSObject result = getResultSuccessObject();

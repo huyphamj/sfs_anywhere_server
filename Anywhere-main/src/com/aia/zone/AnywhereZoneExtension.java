@@ -13,6 +13,7 @@ public class AnywhereZoneExtension extends SFSExtension {
 		addEventHandler(SFSEventType.USER_LOGIN, LoginHandler.class);
 		addEventHandler(SFSEventType.USER_DISCONNECT, DisconnectHandler.class);
 		addEventHandler(SFSEventType.USER_LOGOUT, LogoutHandler.class);
+//		addEventHandler(SFSEventType.USER_JOIN_ZONE, JoinZoneHandler.class);
 
 //		addRequestHandler(EventKey.MESSAGE, MessageHandler.class);
 		addRequestHandler("lobby", LobbyRequestHandler.class);
